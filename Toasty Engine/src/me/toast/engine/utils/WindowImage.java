@@ -1,4 +1,4 @@
-package me.toast.engine;
+package me.toast.engine.utils;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWImage;

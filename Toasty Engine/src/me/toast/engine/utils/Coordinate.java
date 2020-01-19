@@ -1,4 +1,4 @@
-package me.toast.engine;
+package me.toast.engine.utils;
 
 public class Coordinate {
 

@@ -1,7 +1,10 @@
 package me.toast.engine;
 
+import me.toast.engine.enums.RenderState;
 import me.toast.engine.shapes.*;
-import me.toast.engine.textured.TexturedRectangle;
+import me.toast.engine.rendering.Texture;
+import me.toast.engine.utils.Coordinate;
+import me.toast.engine.utils.WindowImage;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -16,16 +19,19 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+/* Bugs */
 //TODO: Fix exact coloring issue
+
+/* TODOs */
+//TODO: Make Different Rendering Modes
+//TODO: Make Dev Variables
 //TODO: Make Event System
 //TODO: Make Sound System
 //TODO: Make Updater System
 //TODO: Enable Multi-Threading
-//TODO: Enable VBOs for Textures
 //TODO: Make Rendering Script System
 //TODO: Make Global Scale
-//TODO: Implement State Rendering System
-//TODO:
+//TODO: Make Launcher
 public class Main {
 
     private long window;
@@ -63,8 +69,8 @@ public class Main {
         });
 
         try (MemoryStack stack = stackPush()) {
-            IntBuffer pWidth = stack.mallocInt(1); // int*
-            IntBuffer pHeight = stack.mallocInt(1); // int*
+            IntBuffer pWidth = stack.mallocInt(1);
+            IntBuffer pHeight = stack.mallocInt(1);
 
             //Center the window
             glfwGetWindowSize(window, pWidth, pHeight);
@@ -94,8 +100,8 @@ public class Main {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         /* Declare Our Shapes */
-        TexturedRectangle rect = new TexturedRectangle("./res/Textures/wood.png", 0, 0, 16, 16);
-        Line line = new Line(new Color(0, 255, 0), new Coordinate(0, 0), new Coordinate(100, 100), 1);
+        Texture texture = new Texture("./res/Textures/wood.png");
+        Circle circle = new Circle(new Color(0, 255, 0), texture, new Coordinate(500, 500), 100, 1, RenderState.FULL);
 
         while(!glfwWindowShouldClose(window)) {
             glClearColor(0, 0, 0, 0);
@@ -103,17 +109,17 @@ public class Main {
             glClear(GL_COLOR_BUFFER_BIT);//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             /* Updating */
-            rect.update();
+            circle.update();
 
             /* Rendering */
-            //rect.render();
-            line.render();
+            circle.render();
 
             glfwSwapBuffers(window);
             glfwPollEvents();
         }
 
         /* Cleaning */
+        circle.clean();
     }
 
     public static void main(String[] args) { new Main().run(); }

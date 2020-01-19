@@ -1,7 +1,7 @@
 package me.toast.engine.shapes;
 
-import me.toast.engine.Coordinate;
-import me.toast.engine.ObjectBase;
+import me.toast.engine.utils.Coordinate;
+import me.toast.engine.utils.ObjectBase;
 
 import java.awt.*;
 
